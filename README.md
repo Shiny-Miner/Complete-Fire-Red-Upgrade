@@ -1,25 +1,5 @@
-# This is our own verse of CFRU , not open for any donations or something.
-
-#### if you support things like these, come here - https://discord.com/invite/axNX3rhR9K
-#### It is adviced to read the wiki [here](https://github.com/Shiny-Miner/CFRU-expansion/wiki) before touching anything.
-#### This fork is made by Tha Code Mining hub to add many corresponding decomps , other fork and our own additions to CFRU , everything here can be used with credits to respective code makers. Removed excessive og CFRU readme.
-
-#### To expand the amount of items just change the number in the file "bytereplacement" to the amount you want +1.
-Ex: 800 items +1 in hex will be 0x321.
-Change word to new number of items for "21 03"
-
-#### The shiny's team (actually not a team but collaborators)
-(FORK, NOT ORIGINAL MAKERS OF CFRU OBVIOUSLY)
-Shiny hunter/Miner,
-ansh860,
-TheAlest,
-Zake,
-Sleepy jirachi,
-OFS,
-AxelLoquendo,
-grilokapu
-
 # Complete Fire Red Upgrade
+This branch is not an included in CFRU expansion project, please move to experiments branch. This is for a rombase creation.
 ## This is CFRU expansion project and not affiliated to the og CFRU, it is going to be levels higher than CFRU.
 #### The new features (after CFRU dev branch):
 - Fixed bugs with dev branch (shiny odds , daycare nidoran breeding)
