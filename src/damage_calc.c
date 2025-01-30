@@ -57,17 +57,17 @@ static const u16 sCriticalHitChances[] =
 
 //This file's functions:
 static u8 CalcPossibleCritChance(u8 bankAtk, u8 bankDef, u16 move, struct Pokemon* monAtk, struct Pokemon* monDef);
-static void TypeDamageModificationByDefTypes(u8 atkAbility, u8 bankDef, u16 move, u8 moveType, u8* flags, u8 defType1, u8 defType2, u8 defType3, struct Pokemon* monDef);
-static void ModulateDmgByType(u8 multiplier, const u16 move, const u8 moveType, const u8 defType, const u8 bankDef, u8 atkAbility, u8* flags, struct Pokemon* monDef);
-static bool8 AbilityCanChangeTypeAndBoost(u16 move, u8 atkAbility, u8 electrifyTimer, bool8 zMoveActive);
+static void TypeDamageModificationByDefTypes(u16 atkability, u8 bankDef, u16 move, u8 moveType, u8* flags, u8 defType1, u8 defType2, u8 defType3, struct Pokemon* monDef);
+static void ModulateDmgByType(u8 multiplier, const u16 move, const u8 moveType, const u8 defType, const u8 bankDef, u16 atkability, u8* flags, struct Pokemon* monDef);
+static bool8 AbilityCanChangeTypeAndBoost(u16 move, u16 atkability, u8 electrifyTimer, bool8 zMoveActive);
 static s32 CalculateBaseDamage(struct DamageCalc* data);
 static u16 GetBasePower(struct DamageCalc* data);
 static u16 AdjustBasePower(struct DamageCalc* data, u16 power);
 static u16 GetZMovePower(u16 zMove);
 static u16 GetMaxMovePower(u16 maxMove);
 static u32 AdjustWeight(u32 weight, ability_t, item_effect_t, bank_t, bool8 check_nimble);
-static u8 GetFlingPower(u16 item, u16 species, u8 ability, u8 bank, bool8 partyCheck);
-static u32 ScreensWeakenDamage(u32 damage, bool8 screensUp, u8 atkAbility, u8 bankDef);
+static u8 GetFlingPower(u16 item, u16 species, u16 ability, u8 bank, bool8 partyCheck);
+static u32 ScreensWeakenDamage(u32 damage, bool8 screensUp, u16 atkability, u8 bankDef);
 static void AdjustDamage(bool8 CheckFalseSwipe);
 static void ApplyRandomDmgMultiplier(void);
 static void TryBoostMonOffensesForTotemBoost(struct DamageCalc* data, u8 bankAtk, bool8 bodyPress);
@@ -79,7 +79,7 @@ void atk04_critcalc(void)
 {
 	u16 critChance;
 	bool8 confirmedCrit;
-	u8 atkAbility = ABILITY(gBankAttacker);
+	u16 atkability = ABILITY(gBankAttacker);
 	u8 atkEffect = ITEM_EFFECT(gBankAttacker);
 	u8 moveTarget = GetBaseMoveTarget(gCurrentMove, gBankAttacker);
 	bool8 calcSpreadMove = IS_DOUBLE_BATTLE && moveTarget & (MOVE_TARGET_BOTH | MOVE_TARGET_ALL);
@@ -101,7 +101,7 @@ void atk04_critcalc(void)
 		|| gNewBS->noResultString[bankDef])
 			continue; //Don't bother with this target
 
-		u8 defAbility = ABILITY(bankDef);
+		u16 defability = ABILITY(bankDef);
 
 		if (defAbility == ABILITY_BATTLEARMOR
 		||  defAbility == ABILITY_SHELLARMOR
@@ -162,8 +162,8 @@ void atk04_critcalc(void)
 
 static u8 CalcPossibleCritChance(u8 bankAtk, u8 bankDef, u16 move, struct Pokemon* monAtk, struct Pokemon* monDef)
 {
-	u8 atkAbility;
-	u8 defAbility;
+	u16 atkability;
+	u16 defability;
 	u16 atkSpecies, atkAbilitySpecies;
 	u32 atkStatus2;
 	u32 defStatus1;
@@ -393,7 +393,7 @@ u32 SplintersDamageCalc(u8 bankAtk, u8 bankDef, u16 move)
 	return gBattleMoveDamage;
 }
 
-static u8 GetNumHitsBasedOnMove(u16 move, u8 atkAbility, unusedArg u16 atkSpecies)
+static u8 GetNumHitsBasedOnMove(u16 move, u16 atkability, unusedArg u16 atkSpecies)
 {
 	u8 numHits = 1;
 
@@ -418,7 +418,7 @@ static u8 GetNumHitsBasedOnMove(u16 move, u8 atkAbility, unusedArg u16 atkSpecie
 	return numHits;
 }
 
-static u16 GetAIParentalBondMultiplierForMove(u16 move, u8 bankAtk, u8 numHits, u8 ability)
+static u16 GetAIParentalBondMultiplierForMove(u16 move, u8 bankAtk, u8 numHits, u16 ability)
 {
 	u16 multiplier = 0;
 
@@ -795,7 +795,7 @@ u32 AI_CalcMonDefDmg(u8 bankAtk, u8 bankDef, u16 move, struct Pokemon* monDef, s
 void atk06_typecalc(void)
 {
 	u8 moveType = gBattleStruct->dynamicMoveType & 0x3F;
-	u8 atkAbility = ABILITY(gBankAttacker);
+	u16 atkability = ABILITY(gBankAttacker);
 	u8 atkType1 = gBattleMons[gBankAttacker].type1;
 	u8 atkType2 = gBattleMons[gBankAttacker].type2;
 	u8 atkType3 = gBattleMons[gBankAttacker].type3;
@@ -815,7 +815,7 @@ void atk06_typecalc(void)
 			|| gNewBS->noResultString[bankDef])
 				continue;
 
-			u8 defAbility = ABILITY(bankDef);
+			u16 defability = ABILITY(bankDef);
 			u8 defEffect = ITEM_EFFECT(bankDef);
 			gBattleMoveDamage = gNewBS->DamageTaken[bankDef];
 			gNewBS->ResultFlags[bankDef] &= ~(MOVE_RESULT_SUPER_EFFECTIVE | MOVE_RESULT_NOT_VERY_EFFECTIVE | MOVE_RESULT_DOESNT_AFFECT_FOE); //Reset for now so damage can be modulated properly
@@ -935,8 +935,8 @@ void atk06_typecalc(void)
 void atk4A_typecalc2(void)
 {
 	u8 moveType = gBattleStruct->dynamicMoveType & 0x3F;
-	u8 atkAbility = ABILITY(gBankAttacker);
-	u8 defAbility = ABILITY(gBankTarget);
+	u16 atkability = ABILITY(gBankAttacker);
+	u16 defability = ABILITY(gBankTarget);
 	u8 defEffect = ITEM_EFFECT(gBankTarget);
 
 	//Check Special Ground Immunities
@@ -1028,9 +1028,9 @@ void atk4A_typecalc2(void)
 u8 TypeCalc(u16 move, u8 bankAtk, u8 bankDef, struct Pokemon* monAtk)
 {
 	u8 moveType;
-	u8 defAbility = ABILITY(bankDef);
+	u16 defability = ABILITY(bankDef);
 	u8 defEffect = ITEM_EFFECT(bankDef);
-	u8 atkAbility, atkType1, atkType2, atkType3;
+	u16 atkability, atkType1, atkType2, atkType3;
 	u8 flags = 0;
 
 	if (move == MOVE_STRUGGLE)
@@ -1128,13 +1128,13 @@ u8 AI_TypeCalc(u16 move, u8 bankAtk, u8 bankDef, struct Pokemon* monDef) //bankD
 
 	u8 flags = 0;
 
-	u8 defAbility = GetMonAbilityAfterTrace(monDef, bankAtk);
+	u16 defability = GetMonAbilityAfterTrace(monDef, bankAtk);
 	u8 defEffect = ItemId_GetHoldEffectParam(monDef->item);
 	u8 defType1 = GetMonType(monDef, 0);
 	u8 defType2 = GetMonType(monDef, 1);
 	u8 defType3 = TYPE_BLANK; //Used for Imposter
 
-	u8 atkAbility = ABILITY(bankAtk);
+	u16 atkability = ABILITY(bankAtk);
 	u8 atkType1 = gBattleMons[bankAtk].type1;
 	u8 atkType2 = gBattleMons[bankAtk].type2;
 	u8 atkType3 = gBattleMons[bankAtk].type3;
@@ -1203,8 +1203,8 @@ u8 AI_SpecialTypeCalc(u16 move, u8 bankAtk, u8 bankDef)
 		return 0;
 
 	u8 moveType;
-	u8 atkAbility = GetAIAbility(bankAtk, bankDef, move);
-	u8 defAbility = GetAIAbility(bankDef, bankAtk, IsValidMovePrediction(bankDef, bankAtk));
+	u16 atkability = GetAIAbility(bankAtk, bankDef, move);
+	u16 defability = GetAIAbility(bankDef, bankAtk, IsValidMovePrediction(bankDef, bankAtk));
 	u8 defEffect = ITEM_EFFECT(bankDef);
 	u8 atkType1, atkType2, atkType3, defType1, defType2, defType3;
 	u8 flags = 0;
@@ -1293,9 +1293,9 @@ u8 VisualTypeCalc(u16 move, u8 bankAtk, u8 bankDef)
 		return 0;
 
 	u8 moveType, moveEffect;
-	u8 defAbility;
+	u16 defability;
 	u8 defEffect = GetRecordedItemEffect(bankDef);
-	u8 atkAbility, defType1, defType2, defType3;
+	u16 atkability, defType1, defType2, defType3;
 	u8 flags = 0;
 
 	atkAbility = ABILITY(bankAtk);
@@ -1440,12 +1440,12 @@ void FutureSightTypeCalc(void)
 	}
 }
 
-void TypeDamageModification(u8 atkAbility, u8 bankDef, u16 move, u8 moveType, u8* flags)
+void TypeDamageModification(u16 atkability, u8 bankDef, u16 move, u8 moveType, u8* flags)
 {
 	return TypeDamageModificationByDefTypes(atkAbility, bankDef, move, moveType, flags, gBattleMons[bankDef].type1, gBattleMons[bankDef].type2, gBattleMons[bankDef].type3, NULL);
 }
 
-static void TypeDamageModificationByDefTypes(u8 atkAbility, u8 bankDef, u16 move, u8 moveType, u8* flags, u8 defType1, u8 defType2, u8 defType3, struct Pokemon* monDef)
+static void TypeDamageModificationByDefTypes(u16 atkability, u8 bankDef, u16 move, u8 moveType, u8* flags, u8 defType1, u8 defType2, u8 defType3, struct Pokemon* monDef)
 {
 	u8 multiplier1, multiplier2, multiplier3;
 
@@ -1470,7 +1470,7 @@ TYPE_LOOP:
 	}
 }
 
-void TypeDamageModificationPartyMon(u8 atkAbility, struct Pokemon* monDef, u16 move, u8 moveType, u8* flags)
+void TypeDamageModificationPartyMon(u16 atkability, struct Pokemon* monDef, u16 move, u8 moveType, u8* flags)
 {
 	u8 defType1, defType2, multiplier1, multiplier2;
 
@@ -1493,7 +1493,7 @@ TYPE_LOOP_AI:
 	}
 }
 
-static void ModulateDmgByType(u8 multiplier, const u16 move, const u8 moveType, const u8 defType, const u8 bankDef, u8 atkAbility, u8* flags, struct Pokemon* monDef)
+static void ModulateDmgByType(u8 multiplier, const u16 move, const u8 moveType, const u8 defType, const u8 bankDef, u16 atkability, u8* flags, struct Pokemon* monDef)
 {
 	bool8 checkMonDef = monDef != NULL;
 
@@ -1658,7 +1658,7 @@ void ModulateByTypeEffectiveness(u8 moveType, u8 defType1, u8 defType2, u8* var)
 
 u8 GetMoveTypeSpecial(u8 bankAtk, u16 move)
 {
-	u8 atkAbility = ABILITY(bankAtk);
+	u16 atkability = ABILITY(bankAtk);
 	u8 moveType = GetMoveTypeSpecialPreAbility(move, bankAtk, NULL);
 	if (moveType != 0xFF)
 		return moveType;
@@ -1688,7 +1688,7 @@ u8 GetMoveTypeSpecialPreAbility(u16 move, u8 bankAtk, struct Pokemon* monAtk)
 	return 0xFF;
 }
 
-u8 GetMoveTypeSpecialPostAbility(u16 move, u8 atkAbility, bool8 zMoveActive)
+u8 GetMoveTypeSpecialPostAbility(u16 move, u16 atkability, bool8 zMoveActive)
 {
 	u8 moveType = gBattleMoves[move].type;
 	bool8 moveTypeCanBeChanged = !zMoveActive || SPLIT(move) == SPLIT_STATUS;
@@ -1726,7 +1726,7 @@ u8 GetMoveTypeSpecialPostAbility(u16 move, u8 atkAbility, bool8 zMoveActive)
 
 u8 GetMonMoveTypeSpecial(struct Pokemon* mon, u16 move)
 {
-	u8 atkAbility = GetMonAbility(mon);
+	u16 atkability = GetMonAbility(mon);
 	u8 moveType = GetMoveTypeSpecialPreAbility(move, 0, mon);
 	if (moveType != 0xFF)
 		return moveType;
@@ -1734,7 +1734,7 @@ u8 GetMonMoveTypeSpecial(struct Pokemon* mon, u16 move)
 	return GetMoveTypeSpecialPostAbility(move, atkAbility, FALSE);
 }
 
-static bool8 AbilityCanChangeTypeAndBoost(u16 move, u8 atkAbility, u8 electrifyTimer, bool8 zMoveActive)
+static bool8 AbilityCanChangeTypeAndBoost(u16 move, u16 atkability, u8 electrifyTimer, bool8 zMoveActive)
 {
 	u8 moveType = gBattleMoves[move].type;
 	bool8 moveTypeCanBeChanged = !zMoveActive || SPLIT(move) == SPLIT_STATUS;
@@ -1904,7 +1904,7 @@ u8 GetExceptionMoveType(u8 bankAtk, u16 move)
 u8 GetMonExceptionMoveType(struct Pokemon* mon, u16 move)
 {
 	u8 moveType = gBattleMoves[move].type;
-	u8 ability = GetMonAbility(mon);
+	u16 ability = GetMonAbility(mon);
 	u16 item = mon->item;
 	u8 effect = ItemId_GetHoldEffect(item);
 	u8 quality = ItemId_GetHoldEffectParam(item);
@@ -2087,7 +2087,7 @@ void AdjustDamage(bool8 checkFalseSwipe)
 		u16 item = ITEM(bankDef);
 		u8 itemEffect = ITEM_EFFECT(bankDef);
 		u8 itemQuality = ITEM_QUALITY(bankDef);
-		u8 defAbility = ABILITY(bankDef);
+		u16 defability = ABILITY(bankDef);
 
 		if ((gNewBS->zMoveData.active || IsAnyMaxMove(gCurrentMove))
 		&& !IsDynamaxed(bankDef)
@@ -4574,7 +4574,7 @@ u8 GetNaturalGiftMovePower(u16 item)
 	return power;
 }
 
-static u32 AdjustWeight(u32 weight, u8 ability, u8 item_effect, u8 bank, bool8 check_nimble)
+static u32 AdjustWeight(u32 weight, u16 ability, u8 item_effect, u8 bank, bool8 check_nimble)
 {
 	int i;
 
@@ -4602,7 +4602,7 @@ static u32 AdjustWeight(u32 weight, u8 ability, u8 item_effect, u8 bank, bool8 c
 	return weight;
 }
 
-u32 GetActualSpeciesWeight(u16 species, u8 ability, u8 itemEffect, u8 bank, bool8 checkNimble)
+u32 GetActualSpeciesWeight(u16 species, u16 ability, u8 itemEffect, u8 bank, bool8 checkNimble)
 {
 	u32 weight = TryGetAlternateSpeciesSize(species, PKDX_GET_WEIGHT); //Eg. Mega Form
 	if (weight == 0)
@@ -4611,7 +4611,7 @@ u32 GetActualSpeciesWeight(u16 species, u8 ability, u8 itemEffect, u8 bank, bool
 	return AdjustWeight(weight, ability, itemEffect, bank, checkNimble);
 }
 
-static u8 GetFlingPower(u16 item, u16 species, u8 ability, u8 bank, bool8 partyCheck)
+static u8 GetFlingPower(u16 item, u16 species, u16 ability, u8 bank, bool8 partyCheck)
 {
 	u8 power = 0;
 	u8 embargoTimer = (partyCheck) ? 0 : gNewBS->EmbargoTimers[bank];
@@ -4626,7 +4626,7 @@ static u8 GetFlingPower(u16 item, u16 species, u8 ability, u8 bank, bool8 partyC
 	return power;
 }
 
-static u32 ScreensWeakenDamage(u32 damage, bool8 screensUp, u8 atkAbility, u8 bankDef)
+static u32 ScreensWeakenDamage(u32 damage, bool8 screensUp, u16 atkability, u8 bankDef)
 {
 	if ((screensUp || gNewBS->AuroraVeilTimers[SIDE(bankDef)])
 	&& gCritMultiplier <= BASE_CRIT_MULTIPLIER && !BypassesScreens(atkAbility))
@@ -4712,7 +4712,7 @@ void CalculateShellSideArmSplits(void)
 		if (!BATTLER_ALIVE(bankAtk))
 			continue;
 
-		u8 atkAbility = ABILITY(bankAtk);
+		u16 atkability = ABILITY(bankAtk);
 		u8 level = gBattleMons[bankAtk].level;
 		u32 attack = gBattleMons[bankAtk].attack;
 		u32 spAttack = gBattleMons[bankAtk].spAttack;
