@@ -220,8 +220,8 @@ static void SpriteCB_SandboxCursor(struct Sprite* sprite);
 static void MiniEvIvPrintText(struct Pokemon *mon, bool8 ev, u8 stat, u8 newValue, u8 stat2, bool8 fixev);
 static void PrintWindow0(struct Pokemon *mon);
 static void PrintWindow1(u8 nature, u8 isEgg);
-static void PrintWindow2(u16 species, u8 isEgg, u8 friendship, u8 ability);
-static void ClearAndPrintAbilityText(u8 ability, u16 species);
+static void PrintWindow2(u16 species, u8 isEgg, u8 friendship, u16 ability);
+static void ClearAndPrintAbilityText(u16 ability, u16 species);
 static const struct OamData sCursorOam =
 {
 	.affineMode = ST_OAM_AFFINE_OFF,
@@ -385,7 +385,7 @@ static void UpdateCursorSpritePos(u16 spriteId, u8 stat, bool8 goingUp, bool8 re
     struct Sprite * sprite = &gSprites[spriteId];
     u8 newPosX = sprite->pos1.x; 
     u8 newPosY = sprite->pos1.y;
-    u8 ability = GetMonAbility(&gPlayerParty[gCurrentMon]);
+    u16 ability = GetMonAbility(&gPlayerParty[gCurrentMon]);
     u16 species = gPlayerParty[gCurrentMon].species;
 
     if(stat == 0xFF)
@@ -492,7 +492,7 @@ static void SandboxChangeAbility(bool8 goingRight)
         }
     }
 
-    u8 ability = GetMonAbility(mon);
+    u16 ability = GetMonAbility(mon);
     ClearAndPrintAbilityText(ability, species);
 
     /*u8 isEgg    = GetMonData(mon, MON_DATA_IS_EGG, 0);
@@ -1405,7 +1405,7 @@ static void SandboxChangeGender(void)
     struct Pokemon *mon = &gPlayerParty[gCurrentMon];
 	u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
 	u32 personality = GetMonData(mon, MON_DATA_PERSONALITY, NULL);
-	u8 abilityNum = (personality & 1); //Flip ability bit
+	u16 abilityNum = (personality & 1); //Flip ability bit
 
 	u32 otId = GetMonData(mon, MON_DATA_OT_ID, NULL);
 	u16 sid = HIHALF(otId);
@@ -1548,7 +1548,7 @@ static void EvIvPrintText(struct Pokemon *mon)
     u8 nature   = GetNature(mon);
     u8 isEgg    = GetMonData(mon, MON_DATA_IS_EGG, 0);
     u8 friendship = GetMonData(mon, MON_DATA_FRIENDSHIP, 0);
-    u8 ability = GetMonAbility(mon);
+    u16 ability = GetMonAbility(mon);
 
     //reinicia los totales.
     //reset the totals.
@@ -1696,7 +1696,7 @@ static void PrintStat(u8 nature, u8 stat)
     }
 }
 
-static void PrintWindow2(u16 species, u8 isEgg, u8 friendship, u8 ability)
+static void PrintWindow2(u16 species, u8 isEgg, u8 friendship, u16 ability)
 {
     u16 temp = 0;
 
@@ -1744,7 +1744,7 @@ static void PrintWindow2(u16 species, u8 isEgg, u8 friendship, u8 ability)
     }
 }
 
-static void ClearAndPrintAbilityText(u8 ability, u16 species)
+static void ClearAndPrintAbilityText(u16 ability, u16 species)
 {
     FillWindowPixelRect(WIN_BOTTOM_BOX, PIXEL_FILL(0), ABILITY_X, 4, 91, 15);
     CopyAbilityName(gStringVar1, ability, species);
