@@ -569,7 +569,7 @@ struct DexnavHudData
 	u16 species;
 	u16 moveId[MAX_MON_MOVES];
 	u16 heldItem;
-	u8 ability;
+	u16 ability;
 	u8 potential;
 	u8 searchLevel;
 	u8 pokemonLevel;
@@ -587,7 +587,7 @@ struct DexnavHudData
 	u8 spriteIdBButton;
 	u8 spriteIdChainNumber;
 	u8 spriteIdChainStar;
-	u8 spriteIdAbility;
+	u16 spriteIdAbility;
 	u8 spriteIdMove;
 	u8 spriteIdItem;
 	u8 spriteIdShakingGrass;
