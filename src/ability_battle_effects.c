@@ -3026,7 +3026,7 @@ species_t TryUpdateIllusionYDelta(u8 bank)
 
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
-extern const u16 ability_Pop_UpTiles[64 * 64 / 2];
+extern const u16 Ability_Pop_UpTiles[64 * 64 / 2];
 
 static void SpriteCb_AbilityPopUp(struct Sprite *sprite);
 static void Task_FreeAbilityPopUpGfx(u8 taskId);
