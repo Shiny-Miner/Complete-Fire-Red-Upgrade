@@ -86,7 +86,7 @@ struct TrainersWithEvs
 	u8 spAtkEv;
 	u8 spDefEv;
 	u8 ball; //0FE = Class-Based Ball, 0xFF = Random Ball
-	u8 ability; //0 = Hidden, 1 = Ability_1, 2 = Ability_2, 3 = Random Ability 1 & 2, 4 = Random Any Ability
+	u16 ability; //0 = Hidden, 1 = Ability_1, 2 = Ability_2, 3 = Random Ability 1 & 2, 4 = Random Any Ability
 };
 
 enum
