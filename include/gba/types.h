@@ -29,7 +29,7 @@ typedef u32 bool32;
 
 typedef u16 species_t;
 typedef u16 move_t;
-typedef u8  ability_t;
+typedef u16  ability_t;
 typedef u16 item_t;
 typedef u8  item_effect_t;
 typedef u8  bank_t;
