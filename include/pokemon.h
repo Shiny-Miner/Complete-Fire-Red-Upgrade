@@ -448,7 +448,7 @@ struct BattlePokemon
     /*0x17*/ u32 altAbility:1;
 	/*0x18*/ u8 type3;
     /*0x19*/ s8 statStages[BATTLE_STATS_NO-1];
-    /*0x20*/ u8 ability;
+    /*0x20*/ u16 ability;
     /*0x21*/ u8 type1;
     /*0x22*/ u8 type2;
     /*0x23*/ u8 unknown;
@@ -538,7 +538,7 @@ struct BaseStats
  /* 0x18 */ u8 safariZoneFleeRate;
  /* 0x19 */ u8 bodyColor : 7;
             u8 noFlip : 1;
- /* 0x1A */	u8 hiddenAbility;
+ /* 0x1A */	u16 hiddenAbility;
 };
 
 struct SpindaSpot
@@ -666,7 +666,7 @@ extern const s8 gNatureStatTable[][5];
 extern const u8 gFacilityClassToPicIndex[];
 extern const u8 gFacilityClassToTrainerClass[];
 
-u8 GetMonAbility(const struct Pokemon* const);
+u16 GetMonAbility(const struct Pokemon* const);
 u8 CountAliveMons(u8 caseId);
 #define BATTLE_ALIVE_EXCEPT_ACTIVE  0
 #define BATTLE_ALIVE_ATK_SIDE       1
