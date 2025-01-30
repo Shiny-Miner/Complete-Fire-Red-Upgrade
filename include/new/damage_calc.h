@@ -21,10 +21,10 @@ struct DamageCalc
 	u16 atkSpecies;
 	u16 defSpecies;
 
-	u8 atkAbility;
-	u8 defAbility;
-	u8 atkPartnerAbility;
-	u8 defPartnerAbility;
+	u16 atkAbility;
+	u16 defAbility;
+	u16 atkPartnerAbility;
+	u16 defPartnerAbility;
 
 	u8 atkItemEffect;
 	u8 atkItemQuality;
@@ -82,12 +82,12 @@ u8 TypeCalc(move_t, u8 bankAtk, u8 bankDef, struct Pokemon* monAtk);
 u8 AI_TypeCalc(move_t, u8 bankAtk, u8 bankDef, struct Pokemon* monDef);
 u8 AI_SpecialTypeCalc(u16 move, u8 bankAtk, u8 bankDef);
 u8 VisualTypeCalc(u16 move, u8 bankAtk, u8 bankDef);
-void TypeDamageModification(u8 atkAbility, u8 bankDef, move_t, u8 moveType, u8* flags);
-void TypeDamageModificationPartyMon(u8 atkAbility, struct Pokemon* monDef, u16 move, u8 moveType, u8* flags);
+void TypeDamageModification(u16 atkAbility, u8 bankDef, move_t, u8 moveType, u8* flags);
+void TypeDamageModificationPartyMon(u16 atkAbility, struct Pokemon* monDef, u16 move, u8 moveType, u8* flags);
 void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8* var);
 u8 GetMoveTypeSpecial(u8 bankAtk, move_t);
 u8 GetMoveTypeSpecialPreAbility(u16 move, u8 bankAtk, struct Pokemon* monAtk);
-u8 GetMoveTypeSpecialPostAbility(u16 move, u8 atkAbility, bool8 zMoveActive);
+u8 GetMoveTypeSpecialPostAbility(u16 move, u16 atkAbility, bool8 zMoveActive);
 u8 GetMonMoveTypeSpecial(struct Pokemon* monAtk, u16 move);
 u8 GetExceptionMoveType(u8 bankAtk, move_t);
 u8 GetMonExceptionMoveType(struct Pokemon*, move_t);
@@ -110,7 +110,7 @@ void CalculateShellSideArmSplits(void);
 
 u8 GetNaturalGiftMoveType(u16 item);
 u8 GetNaturalGiftMovePower(u16 item);
-u32 GetActualSpeciesWeight(u16 species, u8 ability, u8 itemEffect, u8 bank, bool8 checkNimble);
+u32 GetActualSpeciesWeight(u16 species, u16 ability, u8 itemEffect, u8 bank, bool8 checkNimble);
 
 //Functions Hooked In
 u8 GetSummaryScreenMoveType(u16 move, struct Pokemon* mon);
