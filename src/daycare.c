@@ -604,7 +604,7 @@ static u32 DetermineEggPersonality(struct DayCare* daycare, struct BoxPokemon* m
 {
 	u32 personality;
 	s32 natureSlot = GetSlotToInheritNature(daycare);	//Updated nature slot check
-	u8 abilityBit = Random() & 1;
+	u16 abilityBit = Random() & 1;
 
 	if (!((struct Pokemon*) mother)->hiddenAbility
 	#ifdef SPECIES_DITTO
@@ -843,7 +843,7 @@ static u8 GetEggStepsToSubtract(void)
 	
 		if (species != SPECIES_NONE && species != SPECIES_EGG)
 		{
-			u8 ability = GetMonAbility(&gPlayerParty[i]);
+			u16 ability = GetMonAbility(&gPlayerParty[i]);
 
 			if (ability == ABILITY_MAGMAARMOR || ability == ABILITY_FLAMEBODY || ability == ABILITY_STEAMENGINE)
 			{
