@@ -169,7 +169,7 @@ struct Raid
 {
 	u16 species;
 	u16 item;
-	u8 ability;
+	u16 ability;
 	u16 drops[MAX_NUM_DROPS];
 };
 
