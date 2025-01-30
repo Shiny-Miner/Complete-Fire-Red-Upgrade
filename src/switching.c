@@ -63,8 +63,8 @@ enum SwitchInStates
 };
 
 //This file's functions:
-static bool8 TryRemovePrimalWeather(u8 bank, u8 ability);
-static bool8 TryRemoveNeutralizingGas(u8 bank, u8 ability, bool8 leftField);
+static bool8 TryRemovePrimalWeather(u8 bank, u16 ability);
+static bool8 TryRemoveNeutralizingGas(u8 bank, u16 ability, bool8 leftField);
 static bool8 TryRemoveUnnerve(u8 bank);
 static bool8 TryActivateFlowerGift(u8 leavingBank);
 static bool8 TryDoForceSwitchOut(void);
@@ -132,7 +132,7 @@ void atkE2_switchoutabilities(void)
 	}
 }
 
-bool8 HandleSpecialSwitchOutAbilities(u8 bank, u8 ability, bool8 leftField)
+bool8 HandleSpecialSwitchOutAbilities(u8 bank, u16 ability, bool8 leftField)
 {
 	return TryRemovePrimalWeather(bank, ability)
 		|| TryRemoveNeutralizingGas(bank, ability, leftField)
@@ -140,7 +140,7 @@ bool8 HandleSpecialSwitchOutAbilities(u8 bank, u8 ability, bool8 leftField)
 		|| TryActivateFlowerGift(bank);
 }
 
-static bool8 TryRemovePrimalWeather(u8 bank, u8 ability)
+static bool8 TryRemovePrimalWeather(u8 bank, u16 ability)
 {
 	int i;
 	gBattleStringLoader = NULL;
@@ -186,7 +186,7 @@ static bool8 TryRemovePrimalWeather(u8 bank, u8 ability)
 	return FALSE;
 }
 
-static bool8 TryRemoveNeutralizingGas(u8 bank, u8 ability, bool8 leftField)
+static bool8 TryRemoveNeutralizingGas(u8 bank, u16 ability, bool8 leftField)
 {
 	if (ability == ABILITY_NEUTRALIZINGGAS)
 	{
@@ -211,7 +211,7 @@ static bool8 TryRemoveNeutralizingGas(u8 bank, u8 ability, bool8 leftField)
 
 			if (gNewBS->neutralizingGasBlockedAbilities[bank] != ABILITY_NONE)
 			{
-				u8 ability = *GetAbilityLocationIgnoreNeutralizingGas(bank) = gNewBS->neutralizingGasBlockedAbilities[bank]; //Restore ability
+				u16 ability = *GetAbilityLocationIgnoreNeutralizingGas(bank) = gNewBS->neutralizingGasBlockedAbilities[bank]; //Restore ability
 				gNewBS->neutralizingGasBlockedAbilities[bank] = ABILITY_NONE;
 				gNewBS->SlowStartTimers[bank] = 0;
 				gDisableStructs[gBankTarget].truantCounter = 0;
@@ -241,7 +241,7 @@ static bool8 TryRemoveUnnerve(u8 bank)
 {
 	u8 side = SIDE(bank);
 	bool8 ret = FALSE;
-	u8 ability = ABILITY(bank);
+	u16 ability = ABILITY(bank);
 
 	if (IsUnnerveAbility(ability))
 	{
@@ -534,7 +534,7 @@ void atk52_switchineffects(void)
 	UpdateSentPokesToOpponentValue(gActiveBattler);
 	gHitMarker &= ~(HITMARKER_FAINTED(gActiveBattler));
 	gSpecialStatuses[gActiveBattler].flag40 = 0;
-	u8 ability = ABILITY(gActiveBattler);
+	u16 ability = ABILITY(gActiveBattler);
 
 	if (gBattleMons[gActiveBattler].hp == 0)
 		goto SWITCH_IN_END;
