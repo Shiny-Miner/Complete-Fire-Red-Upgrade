@@ -109,7 +109,7 @@ void SwitchOutFormsRevert(u8 bank)
 {
 	struct Pokemon* mon = GetBankPartyData(bank);
 	u16 backupSpecies = mon->backupSpecies;
-	u8 ability = GetMonAbility(mon);
+	u16 ability = GetMonAbility(mon);
 
 	if (IS_TRANSFORMED(bank))
 		return;
@@ -616,7 +616,7 @@ void HoldItemFormChange(struct Pokemon* mon, u16 item)
 	u16 targetSpecies = SPECIES_NONE;
 
 	u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
-	u8 ability = GetMonAbility(mon);
+	u16 ability = GetMonAbility(mon);
 	u8 itemEffect = ItemId_GetHoldEffect(item);
 	u8 type = ItemId_GetHoldEffectParam(item);
 
