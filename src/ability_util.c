@@ -128,7 +128,7 @@ extern const u8 gText_AbilityDescription_WindRider[];
 extern const u8 gText_AbilityName_ZerotoHero[];
 extern const u8 gText_AbilityDescription_ZerotoHero[];
 
-const u8* GetAbilityNameOverride(const u8 ability, const u16 species) //Bypasses the 255 Ability limitation and implements clone Abilities
+const u8* GetAbilityNameOverride(const u16 ability, const u16 species) //Bypasses the 255 Ability limitation and implements clone Abilities
 {
 	u16 dexNum = SpeciesToNationalPokedexNum(species);
 
@@ -548,7 +548,7 @@ const u8* GetAbilityNameOverride(const u8 ability, const u16 species) //Bypasses
 	return NULL;
 }
 
-const u8* GetAbilityName(const u8 ability, const u16 species)
+const u8* GetAbilityName(const u16 ability, const u16 species)
 {
 	const u8* override = GetAbilityNameOverride(ability, species);
 	if (override != NULL)
@@ -562,7 +562,7 @@ const u8* GetAbilityName(const u8 ability, const u16 species)
 	return ptr;
 }
 
-const u8* GetAbilityDescriptionOverride(const u8 ability, const u16 species) //Bypasses the 255 Ability limitation and implements new Abilities
+const u8* GetAbilityDescriptionOverride(const u16 ability, const u16 species) //Bypasses the 255 Ability limitation and implements new Abilities
 {
 	switch (ability)
 	{
@@ -710,7 +710,7 @@ const u8* GetAbilityDescriptionOverride(const u8 ability, const u16 species) //B
 	return NULL;
 }
 
-const u8* GetAbilityDescription(const u8 ability, unusedArg const u16 species)
+const u8* GetAbilityDescription(const u16 ability, unusedArg const u16 species)
 {	
 	const u8* override = GetAbilityDescriptionOverride(ability, species);
 	if (override != NULL)
@@ -720,12 +720,12 @@ const u8* GetAbilityDescription(const u8 ability, unusedArg const u16 species)
 	return desc;
 }
 
-void CopyAbilityName(u8* dst, const u8 ability, const u16 species)
+void CopyAbilityName(u8* dst, const u16 ability, const u16 species)
 {
 	StringCopy(dst, GetAbilityName(ability, species));
 }
 
-void CopyAbilityDescription(u8* dst, const u8 ability, const u16 species)
+void CopyAbilityDescription(u8* dst, const u16 ability, const u16 species)
 {
 	StringCopy(dst, GetAbilityDescription(ability, species));
 }
@@ -834,7 +834,7 @@ bool8 SpeciesHasSlipperyTail(unusedArg u16 species) //Custom Unbound Ability
 	#endif
 }
 
-bool8 IsClearBodyAbility(u8 ability)
+bool8 IsClearBodyAbility(u16 ability)
 {
 	return ability == ABILITY_CLEARBODY
 		#ifdef ABILITY_FULLMETALBODY
@@ -846,7 +846,7 @@ bool8 IsClearBodyAbility(u8 ability)
 		;
 }
 
-bool8 IsMoldBreakerAbility(u8 ability)
+bool8 IsMoldBreakerAbility(u16 ability)
 {
 	return ability == ABILITY_MOLDBREAKER
 		#ifdef ABILITY_TURBOBLAZE
@@ -858,7 +858,7 @@ bool8 IsMoldBreakerAbility(u8 ability)
 		;
 }
 
-bool8 IsMoxieAbility(u8 ability)
+bool8 IsMoxieAbility(u16 ability)
 {
 	switch (ability)
 	{
@@ -884,12 +884,12 @@ bool8 IsMoxieAbility(u8 ability)
 	}
 }
 
-bool8 IsChoiceAbility(u8 ability)
+bool8 IsChoiceAbility(u16 ability)
 {
 	return ability == ABILITY_GORILLATACTICS;
 }
 
-bool8 IsHPAbsorptionAbility(u8 ability)
+bool8 IsHPAbsorptionAbility(u16 ability)
 {
 	switch (ability)
 	{
@@ -901,7 +901,7 @@ bool8 IsHPAbsorptionAbility(u8 ability)
 	}
 }
 
-bool8 IsElectricAbsorptionAblity(u8 ability)
+bool8 IsElectricAbsorptionAblity(u16 ability)
 {
 	switch (ability)
 	{
@@ -914,7 +914,7 @@ bool8 IsElectricAbsorptionAblity(u8 ability)
 	}
 }
 
-bool8 IsPlusMinusAbility(u8 ability)
+bool8 IsPlusMinusAbility(u16 ability)
 {
 	if (SpeciesHasPoisonPuppeteer(SPECIES(gActiveBattler)))
 		return FALSE;
@@ -929,7 +929,7 @@ bool8 IsPlusMinusAbility(u8 ability)
 	}
 }
 
-bool8 IsMultiscaleAbility(u8 ability)
+bool8 IsMultiscaleAbility(u16 ability)
 {
 	switch (ability)
 	{
@@ -941,7 +941,7 @@ bool8 IsMultiscaleAbility(u8 ability)
 	}
 }
 
-bool8 IsPriorityBlockingAbility(u8 ability)
+bool8 IsPriorityBlockingAbility(u16 ability)
 {
 	switch (ability)
 	{
@@ -955,7 +955,7 @@ bool8 IsPriorityBlockingAbility(u8 ability)
 	}
 }
 
-bool8 IsUnnerveAbility(u8 ability)
+bool8 IsUnnerveAbility(u16 ability)
 {
 	return ability == ABILITY_UNNERVE
 		#ifdef ABILITY_ASONE_GRIM
@@ -979,12 +979,12 @@ bool8 UnnerveOnOpposingField(u8 bank)
 		;
 }
 
-bool8 AbilityIncreasesWildItemChance(u8 ability)
+bool8 AbilityIncreasesWildItemChance(u16 ability)
 {
 	return ability == ABILITY_COMPOUNDEYES || ability == ABILITY_SUPERLUCK;
 }
 
-bool8 AbilityBlocksIntimidate(u8 ability)
+bool8 AbilityBlocksIntimidate(u16 ability)
 {
 	return ability == ABILITY_INNERFOCUS
 		|| ability == ABILITY_OWNTEMPO
@@ -992,14 +992,14 @@ bool8 AbilityBlocksIntimidate(u8 ability)
 		|| ability == ABILITY_SCRAPPY;
 }
 
-bool8 AbilityPreventsLoweringAtk(u8 ability)
+bool8 AbilityPreventsLoweringAtk(u16 ability)
 {
 	return ability == ABILITY_HYPERCUTTER
 		|| ability == ABILITY_MIRRORARMOR
 		|| IsClearBodyAbility(ability);
 }
 
-bool8 AbilityPreventsLoweringStat(u8 ability, u8 statId)
+bool8 AbilityPreventsLoweringStat(u16 ability, u8 statId)
 {
 	switch (ability)
 	{
@@ -1014,7 +1014,7 @@ bool8 AbilityPreventsLoweringStat(u8 ability, u8 statId)
 	}
 }
 
-bool8 AbilityRaisesOneStatWhenSomeStatIsLowered(u8 ability)
+bool8 AbilityRaisesOneStatWhenSomeStatIsLowered(u16 ability)
 {
 	return ability == ABILITY_DEFIANT
 		|| ability == ABILITY_COMPETITIVE;
@@ -1087,7 +1087,7 @@ bool8 BankOnFieldHasEvaporate(void)
 	return FALSE;
 }
 
-bool8 IsWhiteSmokeAbility(u8 ability, u16 species)
+bool8 IsWhiteSmokeAbility(u16 ability, u16 species)
 {
 	if (!IsClearBodyAbility(ability))
 		return FALSE;
@@ -1106,7 +1106,7 @@ bool8 IsWhiteSmokeAbility(u8 ability, u16 species)
 	return FALSE;
 }
 
-bool8 IsVitalSpiritAbility(u8 ability, u16 species)
+bool8 IsVitalSpiritAbility(u16 ability, u16 species)
 {
 	if (ability != ABILITY_INSOMNIA)
 		return FALSE;
@@ -1272,7 +1272,7 @@ bool8 SpeciesHasGuardDog(unusedArg u16 species)
 	#endif
 }
 
-bool8 GuardDogPreventsLoweringStat(u8 ability, u8 statId, u8 bank)
+bool8 GuardDogPreventsLoweringStat(u16 ability, u8 statId, u8 bank)
 {
 	switch (ability)
 	{
@@ -1305,7 +1305,7 @@ bool8 SpeciesHasMindsEye(unusedArg u16 species)
 	#endif
 }
 
-bool8 MindsEyePreventsLoweringStat(u8 ability, u8 statId)
+bool8 MindsEyePreventsLoweringStat(u16 ability, u8 statId)
 {
 	switch (ability)
 	{
@@ -1343,7 +1343,7 @@ bool8 SpeciesHasOrichalcumPulse(unusedArg u16 species)
 	#endif
 }
 
-bool8 IsFullMetalBodyAbility(u8 ability, u16 species)
+bool8 IsFullMetalBodyAbility(u16 ability, u16 species)
 {
 	if (!IsClearBodyAbility(ability))
 		return FALSE;
