@@ -16,7 +16,7 @@ void AnimTask_DestroyAbilityPopUp(u8 taskId);
 void TransferAbilityPopUpHelper(void);
 void TransferAbilityPopUpHelperAsTrace(void);
 void TransferAbilityPopUpHelperAsImposter(void);
-void TransferAbilityPopUp(u8 bank, u8 ability);
+void TransferAbilityPopUp(u8 bank, u16 ability);
 u16 GetHighestStat(u8 bankAtk);
 u16 GetHighestStatMon(struct Pokemon* mon);
 
