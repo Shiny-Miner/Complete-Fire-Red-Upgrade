@@ -15,7 +15,7 @@ util.c
 */
 
 //This file's functions:
-static u8 TryRandomizeAbility(u8 ability, unusedArg u16 species);
+static u8 TryRandomizeAbility(u16 ability, unusedArg u16 species);
 
 u32 MathMax(u32 num1, u32 num2)
 {
@@ -63,7 +63,7 @@ bool8 CheckTableForMovesEffect(u16 move, const u8 table[])
 	return FALSE;
 }
 
-bool8 CheckTableForAbility(u8 ability, const u8 table[])
+bool8 CheckTableForAbility(u16 ability, const u8 table[])
 {
 	for (u32 i = 0; table[i] != ABILITY_TABLES_TERMIN; ++i)
 	{
@@ -272,7 +272,7 @@ u32 GetBaseStatsTotal(const u16 species)
 	return sum;
 }
 
-static u8 TryRandomizeAbility(u8 originalAbility, unusedArg u16 species)
+static u16 TryRandomizeAbility(u16 originalAbility, unusedArg u16 species)
 {
 	u32 newAbility = originalAbility;
 
@@ -312,17 +312,17 @@ static u8 TryRandomizeAbility(u8 originalAbility, unusedArg u16 species)
 	return newAbility;
 }
 
-u8 GetAbility1(const u16 species)
+u16 GetAbility1(const u16 species)
 {
 	return TryRandomizeAbility(gBaseStats[species].ability1, species);
 }
 
-u8 GetAbility2(const u16 species)
+u16 GetAbility2(const u16 species)
 {
 	return TryRandomizeAbility(gBaseStats[species].ability2, species);
 }
 
-u8 GetHiddenAbility(const u16 species)
+u16 GetHiddenAbility(const u16 species)
 {
 	return TryRandomizeAbility(gBaseStats[species].hiddenAbility, species);
 }
