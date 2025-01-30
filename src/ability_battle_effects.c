@@ -426,7 +426,7 @@ u16 GetHighestStatMon(struct Pokemon* mon)
 	return maxStatId;
 }
 
-u8 AbilityBattleEffects(u8 caseID, u8 bank, u8 ability, u8 special, u16 moveArg)
+u16 abilityBattleEffects(u8 caseID, u8 bank, u16 ability, u8 special, u16 moveArg)
 {
 	int i;
 	u8 effect = 0;
@@ -3026,7 +3026,7 @@ species_t TryUpdateIllusionYDelta(u8 bank)
 
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
-extern const u8 Ability_Pop_UpTiles[64 * 64 / 2];
+extern const u16 ability_Pop_UpTiles[64 * 64 / 2];
 
 static void SpriteCb_AbilityPopUp(struct Sprite *sprite);
 static void Task_FreeAbilityPopUpGfx(u8 taskId);
@@ -3294,7 +3294,7 @@ void AnimTask_LoadAbilityPopUp(u8 taskId)
 {
 	const s16 (*coords)[2];
 	u8 spriteId1, spriteId2, battlerPosition, destroyerTaskId;
-	u8 ability = gAbilityPopUpHelper; //Preceded by transfer of proper Ability
+	u16 ability = gAbilityPopUpHelper; //Preceded by transfer of proper Ability
 	u16 species = gAbilityPopUpSpecies; //Preceded by transfer of proper species
 
 	LoadSpriteSheet((const struct SpriteSheet*) &gBattleAnimPicTable[ANIM_TAG_ABILITY_POP_UP - ANIM_SPRITES_START]);
@@ -3454,7 +3454,7 @@ void TransferAbilityPopUpHelperAsWanderingSpirit(void)
 	TransferAbilityPopUp(gBattleScripting.bank, ABILITY_WANDERINGSPIRIT);
 }
 
-void TransferAbilityPopUp(u8 bank, u8 ability)
+void TransferAbilityPopUp(u8 bank, u16 ability)
 {
 	gActiveBattler = bank;
 	gAbilityPopUpHelper = ability;
