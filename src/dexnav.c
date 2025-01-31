@@ -1698,7 +1698,7 @@ static void DexNavDrawBButton(u8* spriteIdAddr)
 	*spriteIdAddr = spriteId;
 };
 
-static void DexNavDrawAbility(u8 ability, u16 species, u8* spriteIdAddr)
+static void DexNavDrawAbility(u16 ability, u16 species, u8* spriteIdAddr)
 {
 	LoadCompressedSpriteSheetUsingHeap(&sAbilityCanvasSpriteSheet);
 	LoadSpritePalette(&gHeldItemSpritePalette);
