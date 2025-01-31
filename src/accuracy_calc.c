@@ -429,9 +429,9 @@ static u32 AccuracyCalcPassDefAbilityItemEffect(u16 move, u8 bankAtk, u8 bankDef
 	u8 moveSplit = CalcMoveSplit(move, bankAtk, bankDef);
 
 	u8 acc;
-	if (defAbility == ABILITY_UNAWARE)
+	if (defability == ABILITY_UNAWARE)
 		acc = 6;
-	else if (defAbility == ABILITY_MINDSEYE && SpeciesHasMindsEye(SPECIES(bankDef)))
+	else if (defability == ABILITY_MINDSEYE && SpeciesHasMindsEye(SPECIES(bankDef)))
 		acc = 6;
 	else
 		acc = STAT_STAGE(bankAtk, STAT_STAGE_ACC);
@@ -469,7 +469,7 @@ static u32 AccuracyCalcPassDefAbilityItemEffect(u16 move, u8 bankAtk, u8 bankDef
 		moveAcc = 50;
 
 	//Check Wonder Skin for Status moves
-	if (defAbility == ABILITY_WONDERSKIN && moveSplit == SPLIT_STATUS && moveAcc > 50)
+	if (defability == ABILITY_WONDERSKIN && moveSplit == SPLIT_STATUS && moveAcc > 50)
 		moveAcc = 50;
 
 	calc = gAccuracyStageRatios[buff].dividend * moveAcc;
@@ -494,7 +494,7 @@ static u32 AccuracyCalcPassDefAbilityItemEffect(u16 move, u8 bankAtk, u8 bankDef
 
 	if (WEATHER_HAS_EFFECT)
 	{
-		switch (defAbility) {
+		switch (defability) {
 			case ABILITY_SANDVEIL:
 				if (gBattleWeather & WEATHER_SANDSTORM_ANY)
 					calc = udivsi((calc * 80), 100); // 0.8 Sand Veil loss
@@ -521,7 +521,7 @@ static u32 AccuracyCalcPassDefAbilityItemEffect(u16 move, u8 bankAtk, u8 bankDef
 		}
 	}
 
-	if (defAbility == ABILITY_TANGLEDFEET && IsConfused(bankDef))
+	if (defability == ABILITY_TANGLEDFEET && IsConfused(bankDef))
 		calc /= 2; // 0.5 Tangled Feet loss
 
 	switch (atkEffect) {
@@ -558,9 +558,9 @@ u32 VisualAccuracyCalc(u16 move, u8 bankAtk, u8 bankDef)
 {
 	u8 defEffect  = GetRecordedItemEffect(bankDef);
 	u16 defability = GetRecordedAbility(bankDef);
-	u32 acc = AccuracyCalcPassDefAbilityItemEffect(move, bankAtk, bankDef, defAbility, defEffect);
+	u32 acc = AccuracyCalcPassDefAbilityItemEffect(move, bankAtk, bankDef, defability, defEffect);
 
-	if (ABILITY(bankAtk) == ABILITY_NOGUARD || defAbility == ABILITY_NOGUARD
+	if (ABILITY(bankAtk) == ABILITY_NOGUARD || defability == ABILITY_NOGUARD
 	|| (gStatuses3[bankDef] & STATUS3_ALWAYS_HITS && gDisableStructs[bankDef].bankWithSureHit == bankAtk)
 	|| (move == MOVE_TOXIC && IsOfType(bankAtk, TYPE_POISON))
 	|| (gSpecialMoveFlags[move].gAlwaysHitWhenMinimizedMoves && gStatuses3[bankDef] & STATUS3_MINIMIZED)
