@@ -15,7 +15,7 @@ util.c
 */
 
 //This file's functions:
-static u8 TryRandomizeAbility(u16 ability, unusedArg u16 species);
+static u16 TryRandomizeAbility(u16 ability, unusedArg u16 species);
 
 u32 MathMax(u32 num1, u32 num2)
 {
@@ -63,7 +63,7 @@ bool8 CheckTableForMovesEffect(u16 move, const u8 table[])
 	return FALSE;
 }
 
-bool8 CheckTableForAbility(u16 ability, const u8 table[])
+bool8 CheckTableForAbility(u16 ability, const u16 table[])
 {
 	for (u32 i = 0; table[i] != ABILITY_TABLES_TERMIN; ++i)
 	{

@@ -4546,7 +4546,7 @@ void CalculateMonStatsNew(struct Pokemon *mon)
 	SetMonData(mon, MON_DATA_HP, &currentHP);
 }
 
-u8 GetMonAbility(const struct Pokemon* mon)
+u16 GetMonAbility(const struct Pokemon* mon)
 {
 	u8 ability;
 	u16 species = GetMonData(mon, MON_DATA_SPECIES, NULL);
