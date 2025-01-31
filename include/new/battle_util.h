@@ -15,7 +15,7 @@ u8 GetFirstAliveActiveBattler(void);
 ability_t GetBankAbility(u8 bank);
 ability_t GetRecordedAbility(u8 bank);
 ability_t CopyAbility(u8 bank);
-ability_t* GetAbilityLocation(u8 bank);
+ability_t* GetAbilityLocation(u16 bank);
 ability_t* GetAbilityLocationIgnoreNeutralizingGas(u8 bank);
 void RecordAbilityBattle(u8 bank, u16 ability);
 void ClearBattlerAbilityHistory(u8 bank);
