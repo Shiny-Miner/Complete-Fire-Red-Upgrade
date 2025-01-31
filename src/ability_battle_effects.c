@@ -426,7 +426,7 @@ u16 GetHighestStatMon(struct Pokemon* mon)
 	return maxStatId;
 }
 
-u16 abilityBattleEffects(u8 caseID, u8 bank, u16 ability, u8 special, u16 moveArg)
+u16 AbilityBattleEffects(u8 caseID, u8 bank, u16 ability, u8 special, u16 moveArg)
 {
 	int i;
 	u8 effect = 0;
