@@ -3030,8 +3030,8 @@ void atk93_tryKO(void)
 	u8 bankAtk = gBankAttacker;
 	u8 bankDef = gBankTarget;
 
-	u8 atkAbility = ABILITY(bankAtk);
-	u8 defAbility = ABILITY(bankDef);
+	u16 atkAbility = ABILITY(bankAtk);
+	u16 defAbility = ABILITY(bankDef);
 	u8 defEffect = ITEM_EFFECT(bankDef);
 	u8 defQuality = ITEM_QUALITY(bankDef);
 	u8 mystery = ItemId_GetMystery2(ITEM(bankDef));
@@ -5068,8 +5068,8 @@ void atkD3_trycopyability(void) //Role Play
 {
 	if (gBattleExecBuffer) return;
 
-	u8* atkAbilityLoc, *defAbilityLoc;
-	u8 atkAbility, defAbility;
+	u16* atkAbilityLoc, *defAbilityLoc;
+	u16 atkAbility, defAbility;
 
 	//Get correct location of ability
 	atkAbilityLoc = GetAbilityLocation(gBankAttacker);

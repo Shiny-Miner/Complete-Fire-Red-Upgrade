@@ -94,7 +94,7 @@ void atkFC_clearspecialstatusbit(void)
 //jumpifabilitypresenttargetfield ABILITY ROM_OFFSET
 void atkFD_jumpifabilitypresenttargetfield(void)
 {
-	u8 ability = gBattlescriptCurrInstr[1];
+	u16 ability = gBattlescriptCurrInstr[1];
 	u8* ptr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
 
 	if (ABILITY(gBankTarget) == ability)
@@ -510,7 +510,7 @@ void atkFF09_jumpifcounter(void)
 void atkFF0A_setability(void)
 {
 	u8 bank = GetBankForBattleScript(gBattlescriptCurrInstr[1]);
-	u8 ability = gBattlescriptCurrInstr[2];
+	u16 ability = gBattlescriptCurrInstr[2];
 	*GetAbilityLocation(bank) = ability;
 	ResetTookAbilityFrom(bank);
 	gBattlescriptCurrInstr += 3;
@@ -788,7 +788,7 @@ void atkFF19_formchange(void)
 //jumpifabilitypresentattackerfield ABILITY ROM_OFFSET
 void atkFF1A_jumpifabilitypresentattackerfield(void)
 {
-	u8 ability = gBattlescriptCurrInstr[1];
+	u16 ability = gBattlescriptCurrInstr[1];
 	u8* ptr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
 
 	if (AbilityBattleEffects(ABILITYEFFECT_CHECK_BANK_SIDE, gBankAttacker, ability, 0, 0))

@@ -107,7 +107,7 @@ static void DexNavDrawBlackBar(u8* windowId);
 static void DexNavDrawDirectionalArrow(u8* windowId);
 static void DexNavDrawChainNumber(u8* spriteIdNumAddr, u8* spriteIdStarAddr);
 static void DexNavDrawSight(u8 sight_lvl, u8* spriteIdAddr);
-static void DexNavDrawAbility(u8 ability, u16 species, u8* spriteIdAddr);
+static void DexNavDrawAbility(u16 ability, u16 species, u8* spriteIdAddr);
 static void DexNavDrawMove(u16 move, u8 searchLevel, u8* spriteIdAddr);
 static void DexNavDrawPotential(u8 potential, u8* spriteIdAddr);
 static void DexNavHudDrawSpeciesIcon(u16 species, u8* spriteIdAddr);
