@@ -27,7 +27,7 @@ battle_util.c
 #define IS_BATTLE_CIRCUS (gBattleTypeFlags & BATTLE_TYPE_BATTLE_CIRCUS)
 
 static void TryRemoveUnburdenBoost(u8 bank);
-static bool8 CanBeGeneralStatused(u8 bankDef, u16 defability, u16 atkability, bool8 checkFlowerVeil);
+static bool8 CanBeGeneralStatused(u8 bankDef, u16 defAbility, u16 atkAbility, bool8 checkFlowerVeil);
 
 u8 GetBankForBattleScript(u8 caseId)
 {
@@ -310,7 +310,7 @@ bool8 CheckGrounding(u8 bank)
 	return GROUNDED;
 }
 
-bool8 NonInvasiveCheckGrounding(u8 bank, u16 defability, u8 defType1, u8 defType2, u8 defType3)
+bool8 NonInvasiveCheckGrounding(u8 bank, u16 defAbility, u8 defType1, u8 defType2, u8 defType3)
 {
 	if (BATTLER_SEMI_INVULNERABLE(bank)) //Apparently a thing
 		return IN_AIR;
@@ -404,7 +404,7 @@ bool8 DoesShadowShieldPreventMonHazardDamage(struct Pokemon* mon)
 	return IsMonAffectedByShadowShieldBattle(mon) && mon->hp == mon->maxHP;
 }
 
-bool8 IsDamageHalvedDueToFullHP(u8 bank, u16 defability, u16 move, u16 atkability)
+bool8 IsDamageHalvedDueToFullHP(u8 bank, u16 defAbility, u16 move, u16 atkAbility)
 {
 	if (BATTLER_MAX_HP(bank))
 	{
@@ -417,7 +417,7 @@ bool8 IsDamageHalvedDueToFullHP(u8 bank, u16 defability, u16 move, u16 atkabilit
 	return FALSE;
 }
 
-bool8 IsMonDamageHalvedDueToFullHP(struct Pokemon* mon, u16 defability, u16 move, u16 atkability)
+bool8 IsMonDamageHalvedDueToFullHP(struct Pokemon* mon, u16 defAbility, u16 move, u16 atkAbility)
 {
 	if (mon->hp == mon->maxHP)
 	{
@@ -851,7 +851,7 @@ bool8 IsMoveRedirectedByFollowMe(u16 move, u8 bankAtk, u8 defSide)
 	return TRUE;
 }
 
-bool8 IsMoveRedirectionPrevented(u16 move, u16 atkability)
+bool8 IsMoveRedirectionPrevented(u16 move, u16 atkAbility)
 {
 	return move == MOVE_SNIPESHOT
 		|| (move != MOVE_NONE && gBattleMoves[move].effect == EFFECT_SKY_DROP)
@@ -868,7 +868,7 @@ u8 GetMoveTarget(u16 move, u8 useMoveTarget)
 	u8 bankDef = 0;
 	u8 atkSide, defSide;
 	u8 chosen = FALSE;
-	u16 atkability = ABILITY(bankAtk);
+	u16 atkAbility = ABILITY(bankAtk);
 
 	if (useMoveTarget)
 		moveTarget = useMoveTarget - 1;
@@ -1504,7 +1504,7 @@ bool8 IsAffectedByPowderByDetails(u8 type1, u8 type2, u8 type3, u16 ability, u8 
 		&& type3 != TYPE_GRASS;
 }
 
-bool8 MoveIgnoresSubstitutes(u16 move, u16 atkability)
+bool8 MoveIgnoresSubstitutes(u16 move, u16 atkAbility)
 {
 	return CheckSoundMove(move)
 		|| (BypassesScreens(atkAbility) && move != MOVE_TRANSFORM && gBattleMoves[move].effect != EFFECT_SKY_DROP)
@@ -2044,7 +2044,7 @@ bool8 DoesSleepClausePrevent(u8 bankToPutToSleep)
 	return FALSE;
 }
 
-static bool8 CanBeGeneralStatused(u8 bankDef, u16 defability, u16 atkability, bool8 checkFlowerVeil)
+static bool8 CanBeGeneralStatused(u8 bankDef, u16 defAbility, u16 atkAbility, bool8 checkFlowerVeil)
 {
 	if (!IsTargetAbilityIgnoredNoMove(defAbility, atkAbility)) //Target's Ability is not ignored
 	{
@@ -2093,8 +2093,8 @@ static bool8 CanBeGeneralStatused(u8 bankDef, u16 defability, u16 atkability, bo
 
 bool8 CanBePutToSleep(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 {
-	u16 atkability = ABILITY(bankAtk);
-	u16 defability = ABILITY(bankDef);
+	u16 atkAbility = ABILITY(bankAtk);
+	u16 defAbility = ABILITY(bankDef);
 
 	if (!CanBeGeneralStatused(bankDef, defAbility, atkAbility, checkFlowerVeil))
 		return FALSE;
@@ -2137,11 +2137,11 @@ bool8 CanBeYawned(u8 bankDef, u8 bankAtk)
 	if (!(gStatuses3[bankDef] & STATUS3_YAWN))
 		return FALSE;
 
-	u16 atkability = ABILITY(bankAtk);
+	u16 atkAbility = ABILITY(bankAtk);
 	if (BankSideHasSafeguard(bankDef) && !BypassesScreens(atkAbility) && !(gHitMarker & HITMARKER_IGNORE_SAFEGUARD))
 		return FALSE;
 
-	u16 defability = ABILITY(bankDef);
+	u16 defAbility = ABILITY(bankDef);
 	if (!IsTargetAbilityIgnoredNoMove(defAbility, atkAbility)) //Target's Ability is not ignored
 	{
 		switch (defAbility) {
@@ -2250,8 +2250,8 @@ bool8 CanRest(u8 bank)
 
 bool8 CanBePoisoned(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 {
-	u16 atkability = (bankAtk > gBattlersCount) ? 0 : ABILITY(bankAtk); //bankAtk == 0xFF means no attacker - eg. Toxic Spikes
-	u16 defability = ABILITY(bankDef);
+	u16 atkAbility = (bankAtk > gBattlersCount) ? 0 : ABILITY(bankAtk); //bankAtk == 0xFF means no attacker - eg. Toxic Spikes
+	u16 defAbility = ABILITY(bankDef);
 
 	if (!CanBeGeneralStatused(bankDef, defAbility, atkAbility, checkFlowerVeil))
 		return FALSE;
@@ -2279,8 +2279,8 @@ bool8 CanBePoisoned(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 
 bool8 CanBeParalyzed(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 {
-	u16 atkability = ABILITY(bankAtk);
-	u16 defability = ABILITY(bankDef);
+	u16 atkAbility = ABILITY(bankAtk);
+	u16 defAbility = ABILITY(bankDef);
 
 	if (!CanBeGeneralStatused(bankDef, defAbility, atkAbility, checkFlowerVeil))
 		return FALSE;
@@ -2301,8 +2301,8 @@ bool8 CanBeParalyzed(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 
 bool8 CanBeBurned(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 {
-	u16 atkability = ABILITY(bankAtk);
-	u16 defability = ABILITY(bankDef);
+	u16 atkAbility = ABILITY(bankAtk);
+	u16 defAbility = ABILITY(bankDef);
 
 	if (!CanBeGeneralStatused(bankDef, defAbility, atkAbility, checkFlowerVeil))
 		return FALSE;
@@ -2329,8 +2329,8 @@ bool8 CanBeBurned(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 
 bool8 CanBeFrozen(u8 bankDef, u8 bankAtk, bool8 checkFlowerVeil)
 {
-	u16 atkability = ABILITY(bankAtk);
-	u16 defability = ABILITY(bankDef);
+	u16 atkAbility = ABILITY(bankAtk);
+	u16 defAbility = ABILITY(bankDef);
 
 	if (!CanBeGeneralStatused(bankDef, defAbility, atkAbility, checkFlowerVeil))
 		return FALSE;
@@ -2365,8 +2365,8 @@ bool8 CanBeConfused(u8 bankDef, u8 bankAtk, u8 checkSafeguard)
 	if (gTerrainType == MISTY_TERRAIN && CheckGrounding(bankDef))
 		return FALSE;
 
-	u16 atkability = ABILITY(bankAtk);
-	u16 defability = ABILITY(bankDef);
+	u16 atkAbility = ABILITY(bankAtk);
+	u16 defAbility = ABILITY(bankDef);
 	if (!IsTargetAbilityIgnoredNoMove(defAbility, atkAbility)) //Target's Ability is not ignored
 	{
 		switch (defAbility) {
