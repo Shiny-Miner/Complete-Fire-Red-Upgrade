@@ -63,7 +63,7 @@ bool8 CheckTableForMovesEffect(u16 move, const u8 table[])
 	return FALSE;
 }
 
-bool8 CheckTableForAbility(u16 ability, const u8 table[])
+bool8 CheckTableForAbility(u8 ability, const u8 table[])
 {
 	for (u32 i = 0; table[i] != ABILITY_TABLES_TERMIN; ++i)
 	{

@@ -16,7 +16,7 @@ u16 RandRange(u16 min, u16 max);
 bool8 CheckTableForMove(move_t move, const u16 table[]);
 bool8 CheckTableForMoveEffect(move_t move, const u8 table[]);
 bool8 CheckTableForMovesEffect(move_t move, const u8 table[]);
-bool8 CheckTableForAbility(u16 ability, const u16 table[]);
+bool8 CheckTableForAbility(u8 ability, const u8 table[]);
 bool8 CheckTableForSpecialMoveEffect(u8 effect, const u8 table[]);
 bool8 CheckTableForSpecies(u16 species, const u16 table[]);
 bool8 CheckTableForItem(u16 item, const u16 table[]);
