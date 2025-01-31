@@ -1380,7 +1380,7 @@ u16 AbilityBattleEffects(u8 caseID, u8 bank, u16 ability, u8 special, u16 moveAr
 				&& ABILITY(i) != ABILITY_NONE
 				&& !gSpecialAbilityFlags[ABILITY(i)].gNeutralizingGasBannedAbilities)
 				{
-					u8* abilityLoc = GetAbilityLocation(i);
+					u16* abilityLoc = GetAbilityLocation(i);
 					gNewBS->neutralizingGasBlockedAbilities[i] = *abilityLoc;
 					*abilityLoc = 0;
 					gNewBS->SlowStartTimers[i] = 0;
@@ -3026,7 +3026,7 @@ species_t TryUpdateIllusionYDelta(u8 bank)
 
 extern const struct CompressedSpriteSheet gBattleAnimPicTable[];
 extern const struct CompressedSpritePalette gBattleAnimPaletteTable[];
-extern const u16 Ability_Pop_UpTiles[64 * 64 / 2];
+extern const u8 Ability_Pop_UpTiles[64 * 64 / 2];
 
 static void SpriteCb_AbilityPopUp(struct Sprite *sprite);
 static void Task_FreeAbilityPopUpGfx(u8 taskId);
