@@ -204,7 +204,7 @@ u16 GetHighestStat(u8 bankAtk);
 u16 GetHighestStatMon(struct Pokemon* mon);
 bool8 IsSunWeatherActive(u8 bank);
 
-u16 abilityBattleEffects(u8 caseID, u8 bank, u16 ability, u8 special, u16 moveArg);
+u16 AbilityBattleEffects(u8 caseID, u8 bank, u16 ability, u8 special, u16 moveArg);
 u8 ItemBattleEffects(u8 caseID, u8 bank, bool8 moveTurn, bool8 DoPluck);
 void EmitDataTransfer(u8 bufferId, void* dst, u16 size, void* data);
 
