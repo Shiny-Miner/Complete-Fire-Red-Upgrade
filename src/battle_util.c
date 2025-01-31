@@ -138,7 +138,7 @@ ability_t CopyAbility(u8 bank)
 		return gBattleMons[bank].ability;
 }
 
-ability_t* GetAbilityLocation(u8 bank)
+ability_t* GetAbilityLocation(u16 bank)
 {
 	if (IsAbilitySuppressed(bank))
 		return &gNewBS->SuppressedAbilities[bank];
