@@ -784,9 +784,9 @@ struct NewBattleStruct
 	u8 LastUsedTypes[MAX_BATTLERS_COUNT];
 	u8 lastTargeted[MAX_BATTLERS_COUNT];
 	u8 usedMoveIndices[MAX_BATTLERS_COUNT];
-	u8 DisabledMoldBreakerAbilities[MAX_BATTLERS_COUNT];
-	u8 SuppressedAbilities[MAX_BATTLERS_COUNT];
-	u8 neutralizingGasBlockedAbilities[MAX_BATTLERS_COUNT];
+	u16 DisabledMoldBreakerAbilities[MAX_BATTLERS_COUNT];
+	u16 SuppressedAbilities[MAX_BATTLERS_COUNT];
+	u16 neutralizingGasBlockedAbilities[MAX_BATTLERS_COUNT];
 	u8 skyDropAttackersTarget[MAX_BATTLERS_COUNT]; //skyDropAttackersTarget[gBankAttacker] = gBankTarget
 	u8 skyDropTargetsAttacker[MAX_BATTLERS_COUNT]; //skyDropTargetsAttacker[gBankTarget] = gBankAttacker
 	u8 pickupStack[MAX_BATTLERS_COUNT];
